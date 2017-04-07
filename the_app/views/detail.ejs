@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NMS Galaxy Mapper</title>
+  <link rel="stylesheet" href="styles.css">
+<!-- 
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">  
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+
+
+
+
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable({
+      searching: true,
+      ordering: true
+    });
+} );
+</script>
+ -->
+</head>
+
+
+<body>
+<h1> Details page</h1>
+
+<%if (auth) { %>
+  <a href="/logout">logout</a>  
+<% } else { %>
+  <a href="/auth/google">auth w google</a>  
+<% } %>
+
+
+ 
+
+
+<%if (auth) { %>
+
+
+  <div class="add_container">
+    <h2>Add a Scene</h2>
+
+    <!-- 
+      <h4>
+      User   <input type="text" placeholder="u/user_name/" name="user"><br>
+      Star ID   <input type="text" placeholder="0000:0000:0000:0000" name="id"><br>
+      Current Star Name   <input type="text" placeholder="[HUB-X-00] coolname [stuff]" name="name"><br>
+      Star Class   <input type="text" placeholder="F9pf" name="class"><br>
+      Occupying Race   <input type="text" placeholder="Gek" name="race"><br>
+      What was interesting?   <input type="text" placeholder="Ce, Te, Sp, DynRes, Lush, Diplo" name="tags"></h4> -->
+
+      <div class="add_left_col">
+         <br> 
+        Title  <br>
+        Text
+
+      </div>
+
+
+      <div class="add_right_col">
+
+        <form action="/update-<%= hoa[0].guid %>" method="POST" >
+          <button type="submit">Submit</button><br>
+            <input type="text" placeholder="c01s01" name="title" value="<%= hoa[0].title %>"><br>
+            <textarea name="text" cols="80" rows="50" ><%= hoa[0].text %></textarea>
+        </form>
+
+      </div>
+
+    
+  </div>
+
+
+<% } else { %>
+
+<p> Log in to Add Star Systems! </p> 
+<% } %>
+
+
+
+
+<script>
+$('body').find('br').replaceWith("\n");
+$('body').find('p').each(function() {
+
+    $(this).replaceWith("<p>" + $(this).text().replace(/\n/g, '<p>') + "</p>");
+});
+</script>
+
+  <script src="main.js"></script>
+
+
+<!-- 
+
+  <div>
+    <h2>update</h2>
+    <button id="update"> Update </button>
+  </div>
+
+  <script src="main.js"></script> -->
+
+</body>
+</html>
