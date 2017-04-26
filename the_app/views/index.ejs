@@ -19,27 +19,18 @@
 
 <body>
 
-<!-- <div class="container">
-
-    <div class="jumbotron text-center">
-        <h1><span class="fa fa-lock"></span> Node Authentication</h1>
-
-        <p>Login or Register with:</p>
-
-        <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
-
-    </div>
-
-</div> -->
 
 
   <h1>Hope of Arilon: tk</h1>
-<P>Actual front-end coming SOON(tm).</P> 
-<P>Actual domain name coming SOON(tm). hopeofarilon.fusionbombsderp.com is a temporary home.</P>
-<P>This is a proof-of-concept to see if anyone is interested before investing more time.</P>
+
+  <div class="temp_disclaimer">Actual front-end coming SOON(tm).</div>
+<div class="temp_disclaimer">Actual domain name coming SOON(tm). hopeofarilon.fusionbombsderp.com is a temporary home. </div>
+<div class="temp_disclaimer">This is a proof-of-concept to see if anyone is interested before investing more time. </div>
+<div class="temp_disclaimer">Full Chapter can also be found: <a href="https://www.fictionpress.com/s/3305220/1/Hope-of-Arilon-tk">On FictionPress</a> and <a href="https://www.wattpad.com/story/106472223">On Wattpad</a> </div>
 
 
 
+<div class="line"></div>
 
 
 <div>
@@ -51,28 +42,18 @@
     <div id="<%= hoa[i].title %>" class="text_container">
       <!-- <div class="title"><%= hoa[i].title %></div>   -->
       <p><%= hoa[i].text %></p>
-
-
-
     </div>
     <%if (auth) { %>
       <a href="detail-<%= hoa[i].guid %>">Details</a> | 
- <a class="delete_href" href="delete-<%= hoa[i].guid %>">[X]</a>
+      <a class="delete_href" href="delete-<%= hoa[i].guid %>">[X]</a>
+    <% } else { %>
+    <% } %>
 
-
-
-<% } else { %>
-<% } %>
   <% } %>
 
 
 
 
-<%if (auth) { %>
-  
-<% } else { %>
-
-<% } %>
 
 
 <%if (auth) { %>
@@ -116,7 +97,8 @@
 
 <% } else { %>
 
-  <div ><a href="/auth/google">auth w google</a>  </div>
+  <div ><a href="/auth/google">auth</a>  </div>
+
 <% } %>
 
 
@@ -146,7 +128,7 @@ $('body').find('p').each(function() {
 </script>
 
 
-
+<div class="temp_disclaimer">2017 (c) All Rights Reserved. </div>
 
 </body>
 </html>

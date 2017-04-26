@@ -25,14 +25,18 @@ module.exports = function(app, passport, db) {
     }
     var the_date = new Date().toISOString().replace(/T.+/, ' ').replace(/\..+/, '');
     // console.log("the_date:"+the_date);
-    db.collection('hoa').find({"title" : {"$lt": the_date}}).toArray((err, result) => {
+    db.collection('hoa').find({ $or: [ 
+              {"title" : {"$lte": the_date}}, 
+              {"title" : {"$gte": "3000"}} ] 
+            } ).sort({title: 1}).toArray((err, result) => {
       if (err) return console.log(err)
       res.render('index.ejs', {hoa: result, auth:auth})
     })
   })
 
   app.get('/latest', (req, res, next) => {
-    db.collection('hoa').find().toArray((err, result) => {
+    var the_date = new Date().toISOString().replace(/T.+/, ' ').replace(/\..+/, '');
+    db.collection('hoa').find({"title" : {"$lte": the_date}}).sort({title: 1}).toArray((err, result) => {
       if (err) return console.log(err)
       res.redirect("/#"+result[result.length-1].title)
     })
@@ -41,23 +45,9 @@ module.exports = function(app, passport, db) {
   app.get('/detail-:guid', (req, res) => {
     var db_user="";
     var req_user="";
-    var auth = false;
-    
-    if (req.isAuthenticated()) {
-      db.collection('user').find().toArray((err, result) => {
-        if (err) return console.log(err)
-        db_user = result[0].user;
-        // console.log("db_user:"+db_user);
-        if(req.user){
-          req_user = req.user.emails[0].value;
-        }
-        console.log("Found users: "+db_user+", and: "+req_user);
-        if(db_user==req_user){
-          auth=true;
-        }
-      });
-      
-    }  
+    var auth = false; 
+    auth = checkAuth(req,res,next,db);
+
     db.collection('hoa').find({guid:req.params.guid}).toArray((err, result) => {
       if (err) return console.log(err)
       res.render('detail.ejs', {hoa: result, auth:auth})
@@ -175,4 +165,23 @@ function ensureAuthenticated(req, res, next) {
 
   // denied. redirect to login
   res.redirect('/')
+}
+
+function checkAuth(req, res, next, db){
+  var auth = false;
+  if (req.isAuthenticated()) {
+    db.collection('user').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      db_user = result[0].user;
+      // console.log("db_user:"+db_user);
+      if(req.user){
+        req_user = req.user.emails[0].value;
+      }
+      console.log("Found users: "+db_user+", and: "+req_user);
+      if(db_user==req_user){
+        auth=true;
+      }
+    });
+  }
+  return auth;
 }
